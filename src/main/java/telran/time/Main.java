@@ -1,5 +1,7 @@
 package telran.time;
 
+import java.time.LocalDate;
+
 record MonthYear(int month, int year){
 }
 
@@ -41,15 +43,19 @@ public class Main {
     }
 
     private int getFirstDayOfWeek(MonthYear monthYear){
-        return 0;
+        LocalDate firstDay = LocalDate.of(monthYear.year(), monthYear.month(), 1);
+        return firstDay.getDayOfWeek().getValue();
     }
 
     private int getOffSet(int firstWeekDay){
-        //shift on this offset for starting println
-        return 0;
+        return firstWeekDay % 7;
     }
 
-    private int getLastDayOfMonth(MonthYear monthyear){
-        return 0;
+    private static int getLastDayOfMonth(MonthYear monthYear) {
+        LocalDate lastDay = LocalDate.of(monthYear.year(), monthYear.month(), 1)
+                                      .withDayOfMonth(1)
+                                      .plusMonths(1)
+                                      .minusDays(1);
+        return lastDay.getDayOfMonth();
     }
 }
