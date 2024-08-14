@@ -1,9 +1,10 @@
 package telran.time;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 
-record MonthYear(int month, int year){
+record MonthYear(int month, int year, int weekStartDay){
 }
 
 public class Main {
@@ -22,40 +23,46 @@ public class Main {
 
     private static void printCalendar(MonthYear monthYear) {
         printTitle(monthYear);
-        printWeekDays();
+        printWeekDays(monthYear);
         printDates(monthYear);
         
     }
 
     private static MonthYear getMonthYear(String[] args) throws Exception {
-        if (args.length != 2) {
-            throw new Exception("Please provide month and year as arguments.");
+        if (args.length != 3) {
+            throw new Exception("Please provide month, year and start day as arguments.");
         }
         try {
             int month = Integer.parseInt(args[0]);
             int year = Integer.parseInt(args[1]);
-            if (month < 1 || month > 12) {
-                throw new Exception("Month must be between 1 and 12.");
+            int weekStartDay = Integer.parseInt(args[2]);
+            if (month < 1 || month > 12 || weekStartDay < 1 || weekStartDay > 7) {
+                throw new Exception("Month must be between 1 and 12, and start day must be between 1 and 7");
             }
-            return new MonthYear(month, year);
+            return new MonthYear(month, year, weekStartDay);
         } catch (NumberFormatException e) {
-            throw new Exception("Invalid number format for month or year.");
+            throw new Exception("Invalid number format for month or year, or start day");
         }
     }
 
     private static void printTitle(MonthYear monthYear) {
         String monthName = Month.of(monthYear.month()).name();
-        System.out.println("    "+ monthName + " " + monthYear.year());
+        System.out.println("     " + monthName + " " + monthYear.year());
     }
 
-    private static void printWeekDays() {
-        System.out.println("Mo Tu We Th Fr Sa Su");
+    private static void printWeekDays(MonthYear monthYear) {
+        for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+            int currentDay = (monthYear.weekStartDay() + dayOfWeek - 1) % 7 + 1;
+            DayOfWeek day = DayOfWeek.of(currentDay);
+            System.out.printf("%s ", day.name().substring(0, 2));
+        }
+        System.out.println();
     }
 
     private static void printDates(MonthYear monthYear) {
         int firstDayOfWeek = getFirstDayOfWeek(monthYear);
         int lastDayOfMonth = getLastDayOfMonth(monthYear);
-        int offset = getOffSet(firstDayOfWeek);
+        int offset = getOffSet(firstDayOfWeek, monthYear);
 
         for (int i = 0; i < offset; i++) {
             System.out.print("   ");
@@ -75,8 +82,8 @@ public class Main {
         return firstDay.getDayOfWeek().getValue();
     }
 
-    private static int getOffSet(int firstWeekDay){
-        return firstWeekDay-1 % 7;
+    private static int getOffSet(int firstWeekDay, MonthYear monthYear){
+        return firstWeekDay+monthYear.weekStartDay()-1 % 7;
     }
 
     private static int getLastDayOfMonth(MonthYear monthYear) {
