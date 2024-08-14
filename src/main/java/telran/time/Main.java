@@ -30,7 +30,7 @@ public class Main {
 
     private static MonthYear getMonthYear(String[] args) throws Exception {
         if (args.length > 3 || args.length < 2) {
-            throw new Exception("Please provide month, year and start day as arguments.");
+            throw new Exception("Please provide month, year and, if you want start day as arguments.");
         }
         try {
             int month = Integer.parseInt(args[0]);
