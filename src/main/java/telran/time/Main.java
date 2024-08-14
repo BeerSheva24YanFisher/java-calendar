@@ -54,7 +54,7 @@ public class Main {
         for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             int currentDay = (monthYear.weekStartDay() + dayOfWeek - 1) % 7 + 1;
             DayOfWeek day = DayOfWeek.of(currentDay);
-            System.out.printf("%s ", day.name().substring(0, 2));
+            System.out.printf("%2s ", day.name().substring(0, 2));
         }
         System.out.println();
     }
