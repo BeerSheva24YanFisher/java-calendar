@@ -29,13 +29,17 @@ public class Main {
     }
 
     private static MonthYear getMonthYear(String[] args) throws Exception {
-        if (args.length != 3) {
+        if (args.length > 3 || args.length < 2) {
             throw new Exception("Please provide month, year and start day as arguments.");
         }
         try {
             int month = Integer.parseInt(args[0]);
             int year = Integer.parseInt(args[1]);
-            int weekStartDay = Integer.parseInt(args[2]);
+            int weekStartDay = 1;
+            if (args.length==3){
+                weekStartDay = Integer.parseInt(args[2]);
+            }
+
             if (month < 1 || month > 12 || weekStartDay < 1 || weekStartDay > 7) {
                 throw new Exception("Month must be between 1 and 12, and start day must be between 1 and 7");
             }
