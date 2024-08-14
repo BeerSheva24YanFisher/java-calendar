@@ -54,7 +54,7 @@ public class Main {
         for (int dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             int currentDay = (monthYear.weekStartDay() + dayOfWeek - 1) % 7 + 1;
             DayOfWeek day = DayOfWeek.of(currentDay);
-            System.out.printf("%2s ", day.name().substring(0, 2));
+            System.out.printf("%3s", day.name().substring(0, 2));
         }
         System.out.println();
     }
@@ -69,7 +69,7 @@ public class Main {
         }
 
         for (int day = 1; day <= lastDayOfMonth; day++) {
-            System.out.printf("%2d ", day);
+            System.out.printf("%3d", day);
             if ((offset + day) % 7 == 0) {
                 System.out.println();
             }
@@ -83,7 +83,7 @@ public class Main {
     }
 
     private static int getOffSet(int firstWeekDay, MonthYear monthYear){
-        return firstWeekDay+monthYear.weekStartDay()-1 % 7;
+        return firstWeekDay - monthYear.weekStartDay() % 7;
     }
 
     private static int getLastDayOfMonth(MonthYear monthYear) {
