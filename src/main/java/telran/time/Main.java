@@ -47,7 +47,8 @@ public class Main {
 
     private static void printTitle(MonthYear monthYear) {
         String monthName = Month.of(monthYear.month()).name();
-        System.out.println("     " + monthName + " " + monthYear.year());
+        System.out.printf("%12s%5d", monthName, monthYear.year());
+        System.out.println();
     }
 
     private static void printWeekDays(MonthYear monthYear) {
