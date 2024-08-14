@@ -47,8 +47,7 @@ public class Main {
 
     private static void printTitle(MonthYear monthYear) {
         String monthName = Month.of(monthYear.month()).name();
-        System.out.printf("%12s%5d", monthName, monthYear.year());
-        System.out.println();
+        System.out.printf("%9d, %s\n", monthYear.year(), monthName);
     }
 
     private static void printWeekDays(MonthYear monthYear) {
@@ -84,7 +83,7 @@ public class Main {
     }
 
     private static int getOffSet(int firstWeekDay, MonthYear monthYear){
-        return firstWeekDay - monthYear.weekStartDay() % 7;
+        return (firstWeekDay - monthYear.weekStartDay()+7) % 7;
     }
 
     private static int getLastDayOfMonth(MonthYear monthYear) {
